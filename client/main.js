@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
 import {Tracker} from 'meteor/tracker';
 import {Players} from './../imports/api/players';
+import TitleBar from './../imports/ui/TitleBar';
+import AddPlayer from './../imports/ui/AddPlayer';
 
 
 const renderPlayers = (playersList) => {
@@ -36,8 +38,9 @@ Meteor.startup(() => {
     let title = 'Score Keep';
     let jsx = (
       <div>
-        <h1>{title}</h1>
+        <TitleBar/>
         {renderPlayers(players)}
+        <AddPlayer/>
         <form onSubmit={handleSubmit}>
           <input type="text" name="playerName" placeholder="Player Name"/>
           <button>Add Player</button>
