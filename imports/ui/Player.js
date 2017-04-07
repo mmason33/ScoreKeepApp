@@ -3,7 +3,7 @@ import {Players} from './../api/players';
 
 export default class Player extends React.Component {
   render() {
-    let itemClassName = `item item--postion-${this.props.player.rank}`;
+    let itemClassName = `item item--position-${this.props.player.rank}`;
     return (
       <div className={itemClassName} key={this.props.player._id}>
         <div className="player">
