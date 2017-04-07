@@ -1,38 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Meteor} from 'meteor/meteor';
+import {Tracker} from 'meteor/tracker';
+import {Players, calculatePlayerPostions} from './../imports/api/players';
+import App from './../imports/ui/App';
 
-
-const players = [{
-  _id: '1',
-  name: 'Boone',
-  score: 99
-}, {
-  _id: '2',
-  name: 'Ken',
-  score: 22
-}, {
-  _id: '3',
-  name: 'Ed',
-  score: 17
-}];
-
-const renderPlayers = function (playersList) {
-  return playersList.map(function (player) {
-    return <p key={player._id}>{player.name} has {player.score} point(s).</p>;
+Meteor.startup(() => {
+  Tracker.autorun(() => {
+    let players = Players.find({}, {sort: {score: -1}}).fetch();
+    let postionedPlayers = calculatePlayerPostions(players);
+    let title = 'Score Keep';
+    let subTitle = 'Created by Michael Mason';
+    ReactDOM.render(<App title={title} players={postionedPlayers}/>, document.getElementById('app'));
   });
-};
-
-Meteor.startup(function() {
-  let title = 'Score Keep';
-  let name = 'Boone';
-  let jsx = (
-    <div>
-      <h1>{title}</h1>
-      <p>Hello {name}</p>
-      <p>Second paragraph</p>
-      {renderPlayers(players)}
-    </div>
-  );
-    ReactDOM.render(jsx, document.getElementById('app'));
 });
